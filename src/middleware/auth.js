@@ -1,0 +1,17 @@
+const jwt = require("jsonwebtoken");
+const Register = require("../models/userRegistration");
+
+const Auth = async(req, res, next) => {
+    try {
+        const token = req.cookies.jwt;
+        const verifyUser = jwt.verify(token, process.env.SECRET_KEY)
+        console.log(verifyUser);
+        const user = await Register.findOne({ _id: verifyUser._id })
+        console.log(user.firstName);
+        next();
+    } catch (error) {
+        res.status(401).send(error);
+
+    }
+};
+module.exports = Auth;

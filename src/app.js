@@ -16,6 +16,7 @@ const static_path = path.join(__dirname, "../public");
 
 const template_path = path.join(__dirname, "../templates/views");
 const partials_path = path.join(__dirname, "../templates/partials");
+const Auth = require("./middleware/auth")
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
@@ -31,7 +32,7 @@ app.get("/", (req, res) => {
 
 })
 
-app.get("/home", (req, res) => {
+app.get("/home", Auth, (req, res) => {
 
 
     console.log("cookie info", req.cookies.jwt);
